@@ -1,0 +1,110 @@
+<?php
+    function encrypt_menu() {
+        $items['encrpyt'] = array(
+            'title' => 'Encrpyt',
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('encrypt_form'),
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+        );
+        $items['encrypt_success_page'] = array(
+            'title' => 'Succesfully Encrypted',
+            'page callback' => 'encrypt_success',
+            'access callback' => TRUE,
+            'type' => MENU_CALLBACK,
+        );
+        return $items;
+    }
+
+    function encrypt_form() {
+        $form['shift_value'] = array(
+            '#title' => 'Shift Value',
+            '#type' => 'textfield',
+            '#description' => t('Enter a number for the shift value.'),
+            '#element_validate' => array('element_validate_integer_positive'),
+            // '#required' => TRUE,
+        );
+        $form['direction'] = array(
+            '#title' => 'Direction',
+            '#type' => 'textfield',
+            '#description' => t('Enter the direction you would like to shift.'),
+            '#element_validate' => array('element_validate_left_right'),
+            '#required' => TRUE,
+        );
+        $form['phrase'] = array(
+            '#title' => 'Phrase',
+            '#type' => 'textfield',
+            '#description' => t('Enter a phrase to be encrpyted.'),
+            '#element_validate' => array('element_validate_no_special'),
+            '#required' => TRUE,
+        );
+        $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Encrypt!',
+        );
+        return $form;
+    }
+
+    function element_validate_left_right($element){
+        $direction_input = strtolower($element['#value']);
+        var_dump($direction_input);
+        if ( $direction_input != "left" && $direction_input != "right"){
+            form_error($element, t('Direction must be left or right'));
+        }
+    }
+
+    function element_validate_no_special($element){
+        $special_chars = array('_','-','=','+','@','#','$','%','^','&','*','(',')','{','}','[',']','|','~','`','/','<','>');
+        $phrase_chars = str_split($element['#value']);
+        foreach($phrase_chars as $char){
+            if (in_array($char, $special_chars)){
+                form_error($element, t('Please do not use any of the following characters: @, #, $, %, ^, &, *, (), -, _, =, +, {}, [], |, <, >, /, ~, or `'));
+            }
+        }
+    }
+
+    function encrypt_form_submit($form, &$form_state){
+        $shift_value = $form_state['values']['shift_value'];
+        if ($shift_value == null){
+            $shift_value = rand(1,25);
+        }
+        $direction = strtolower($form_state['values']['direction']);
+        $phrase = strtolower($form_state['values']['phrase']);
+        $phrase_words = explode(" ", $phrase);
+
+
+
+        $alphabet = range('a','z');
+
+        $keys = array_flip($alphabet); // converts the array from its letter values to its number keys
+
+        $encrypted_words = array();
+
+        foreach ($phrase_words as $word){
+            $i = 0; // initializing starting position of loop
+            $word = str_split($word);
+            $word_length = sizeof($word);
+
+            $encrypted_word = "";
+            foreach($word as $letter){
+                if (in_array($letter, $alphabet)){
+                    if ($direction == 'right'){
+                        $encrypted_word .= $alphabet[($keys[$letter] + $shift_value)%26];
+                    } else {
+                        $encrypted_word .= $alphabet[(26 + $keys[$letter] - $shift_value)%26];
+                    }
+                } else {
+                    $encrypted_word .= $letter;
+                }
+            }
+            array_push($encrypted_words, $encrypted_word);
+        }
+        $encrypted_phrase = implode(" ", $encrypted_words);
+        $_SESSION['encrypted_output'] = $encrypted_phrase;
+        $form_state['redirect'] = 'encrypt_success_page';
+    }
+
+    function encrypt_success(){
+        $new_phrase = $_SESSION['encrypted_output'];
+        return "Encrypted Phrase: " . $new_phrase;
+    }

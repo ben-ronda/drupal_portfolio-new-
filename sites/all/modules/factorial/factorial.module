@@ -1,0 +1,51 @@
+<?php
+function factorial_menu(){
+    $items = array();
+    $items['factorial'] = array(
+        'title' => 'Factorial Calculator',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('factorial_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['factorial_success_page'] = array(
+        'title' => 'Factorial Results',
+        'page callback' => 'factorial_success',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function factorial_form(){
+    $form['factorial_number'] = array(
+        '#title' => 'Number',
+        '#type' => 'textfield',
+        '#description' => 'Enter a number to calculate its factorial',
+        '#element_validate' => array('element_validate_integer_positive'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Calculate!',
+    );
+    return $form;
+}
+
+function factorial_form_submit($form, &$form_state){
+    $number = $form_state['values']['factorial_number'];
+    $i = ($number - 1); // sets the first number to multiply by i.e.if $number = 8 then $i = 7;
+    $output = 0;
+    do{
+        $number = ($number * ($i));
+        $i--;
+    } while($i > 0);
+
+    $_SESSION['result'] = $number;
+    $form_state['redirect'] = 'factorial_success_page';
+}
+
+function factorial_success(){
+    $result = $_SESSION['result'];
+    return '<p>' . $result . '</p>';
+}

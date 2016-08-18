@@ -1,0 +1,6 @@
+name = Custom Module - Menu
+description = For creating menus and sub menus of custom modules.
+package = Custom Modules
+core = 7.x
+files[] = custom_menu.module
+

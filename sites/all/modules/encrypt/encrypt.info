@@ -1,0 +1,5 @@
+name = Encrypt
+description = Encrypts a string input from the user using a shift cipher.
+package = Ben Custom Modules
+core = 7.x
+files[] = encrypt.module

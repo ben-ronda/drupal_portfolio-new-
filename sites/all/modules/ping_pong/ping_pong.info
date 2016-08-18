@@ -1,0 +1,5 @@
+name = Ping Pong
+description = Module that takes a number from a user and checks if each number leading up to that number is divisible by 15, 5, or 3 or none of those and returns the "pingpong", "pong", "ping", or just the number, respectively.
+package = Ben Custom Modules
+core = 7.x
+files[] = ping_pong.module

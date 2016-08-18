@@ -1,0 +1,6 @@
+name = Factorial Calculator
+description = A custom module for calculating a factorial based on a number given by the user.
+package = Custom Modules
+core = 7.x
+files[] = factorial.module
+

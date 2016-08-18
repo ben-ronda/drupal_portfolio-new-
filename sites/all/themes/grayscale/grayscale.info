@@ -1,0 +1,5 @@
+name = Grayscale
+description = Theme built following pro D7 Development book.
+core = 7.x
+engine = phptemplate
+stylesheets[all][] = css/style.css

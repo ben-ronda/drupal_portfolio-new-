@@ -1,0 +1,5 @@
+name = Remove Default
+description = Remove default "Welcome to @site_name" and default message.
+package = Ben's Custom Modules
+core = 7.x
+files[] = remove_default.module

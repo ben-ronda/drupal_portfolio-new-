@@ -1,0 +1,12 @@
+<?php
+$path = request_path(); //gets current path alias
+
+function remove_default_page_alter(&$page, $path){ // hook_page_alter
+    // print '<pre>'; // lines 5-7 display page data and format
+    // print_r($page);
+    // print '</pre>';
+    if ($path == ''){ // checks if path is the front page
+        unset($page['content']['system_main']['default_message']); // removes default message that appears underneath the "Welcome to <site_name>"
+        drupal_set_title(''); //Changes "Welcome to <site_name>" to be an empty string
+    }
+}
