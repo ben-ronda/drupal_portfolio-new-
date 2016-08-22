@@ -1,3 +1,32 @@
 <?php
 
-function()
+function word_count_menu() {
+  $items['word_count'] = array(
+    'title' => 'Word Count',
+    'page_callback' => 'drupal_get_form',
+    'page_arguments' => array('word_count_form'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['word_count_success_page'] = array(
+    'title' => 'Success',
+    'page callback' => 'ping_pong_success',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function word_count_form(){
+  $form['text_input'] = array(
+    '#title' => 'Text Input',
+    '#type' => 'textfield',
+    '#description' => t('Please enter the text you would like to count the words of.'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Count!',
+  );
+  return $form;
+}
