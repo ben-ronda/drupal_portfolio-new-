@@ -1,0 +1,5 @@
+name = Word Count
+description = A module that returns the number of words in a given block of words.
+package = Ben Custom Modules
+core = 7.x
+files[] = word_count.module
