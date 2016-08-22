@@ -3,8 +3,8 @@
 function word_count_menu() {
   $items['word_count'] = array(
     'title' => 'Word Count',
-    'page_callback' => 'drupal_get_form',
-    'page_arguments' => array('word_count_form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('word_count_form'),
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
