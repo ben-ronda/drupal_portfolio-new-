@@ -33,7 +33,7 @@ function word_count_form(){
 
 function word_count_form_submit($form, &$form_state) {
   $input = $form_state['values']['text_input'];
-  $words = str_split($input);
+  $words = explode(" ", $input);
   $number_of_words = sizeof($words);
 
   $_SESSION['word_count_output'] = $number_of_words;
