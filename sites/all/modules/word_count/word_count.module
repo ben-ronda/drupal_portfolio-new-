@@ -31,7 +31,7 @@ function word_count_form(){
   return $form;
 }
 
-function word_count_form_submit($form, &$formstate) {
+function word_count_form_submit($form, &$form_state) {
   $input = $form_state['values']['text_input'];
   $words = str_split($input);
   $number_of_words = sizeof($words);
