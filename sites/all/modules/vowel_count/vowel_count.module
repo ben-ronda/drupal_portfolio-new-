@@ -1,0 +1,32 @@
+<?php
+
+function vowel_count_menu(){
+  $items['vowel_count'] = array(
+    'title' => 'Vowel Count',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('vowel_count_form'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['vowel_count_success_page'] = array(
+    'title' => 'Success',
+    'page callback' => 'vowel_count_success',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function vowel_count_form() {
+  $form['count_goal'] = array(
+    '#title' => 'Text Input',
+    '#type' => 'textfield',
+    '#description' => t('Insert a body of text.'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Go',
+  );
+  return $form;
+}

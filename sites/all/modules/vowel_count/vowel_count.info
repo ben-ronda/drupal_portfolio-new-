@@ -1,0 +1,5 @@
+name = Vowel Count
+description = Counts the vowels a given text input.
+package = Ben Custom Modules
+core = 7.x
+files[] = ping_pong.module
